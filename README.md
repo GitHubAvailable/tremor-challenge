@@ -34,17 +34,17 @@ Classic.
    ```bash
    git clone https://github.com/GitHubAvailable/tremor-challenge
    ```
-2. Open the folder in [Visual Studio Code][vscode]. PlatformIO 
-   should be starting creating relevant and dependencies automatically.
+2. Open the folder in [Visual Studio Code][vscode]. 
+   [PlatformIO IDE][platformIO] should be starting creating relevant 
+   and dependencies automatically.
 
-   **Note:** Do **NOT** open the project folder along with other 
-   folders, or the download may not start.
+   **Note:** **DO NOT** open the project folder along with other folders, or the creation may not start.
 
 **Known Bugs:**
-1. Removing `#include <Adafruit_CircuitPlayground.h>`{:.cpp} in 
-   `src/main.cpp` will may lead to an error about `SPI.h` not found.
+1. Removing `#include <Adafruit_CircuitPlayground.h>` 
+   in `src/main.cpp` will may lead to an error about `SPI.h` not found.
 
 ### Testing
 
 [vscode]: https://code.visualstudio.com/download
-[platfomIO]: https://platformio.org/platformio-ide
+[platformIO]: https://platformio.org/platformio-ide
