@@ -11,11 +11,15 @@
  * MIT-0 License for more details.
  * 
  * Modified 22 April 2024 by Mark Liu
-*/
+ */
 
 #ifndef Setup_h
 #define Setup_h
 
-void setupAccelerometer();
+#define START_END PD4 // pin of start/end button
+#define STATUS_LED PC7 // pin of status LED
+
+void setupButtons();
+void setupLED();
 
 #endif

@@ -11,14 +11,21 @@
  * MIT-0 License for more details.
  * 
  * Modified 22 April 2024 by Mark Liu
-*/
+ */
 
 #include <Arduino.h>
 #include "setup.h"
 
 // TODO: LED for Measuring, neo pixel to indcate tremor, intensity
 
-void setupAccelerometer()
+void setupButtons()
 {
-    Serial.println("Called");
+    DDRD &= ~(OUTPUT << START_END); // set start/end button to INPUT.
+}
+
+void setupLED()
+{
+    DDRC |= (OUTPUT << STATUS_LED); // set status LED to OUTPUT.
+    
+    PORTC &= ~(HIGH << STATUS_LED); // default value is LOW.
 }
