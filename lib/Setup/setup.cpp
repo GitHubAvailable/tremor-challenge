@@ -16,8 +16,6 @@
 #include <Arduino.h>
 #include "setup.h"
 
-// TODO: LED for Measuring, neo pixel to indcate tremor, intensity
-
 void setupButtons()
 {
     DDRD &= ~(OUTPUT << START_END); // set start/end button to INPUT.
