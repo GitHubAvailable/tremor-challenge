@@ -1,5 +1,5 @@
 /**
- * Setup.h - Library of hardware setup functions for the 
+ * setup.h - Library of hardware setup functions for the 
  * Parkinsonian Tremor Detector.
  * 
  * This library is free software; you can redistribute it and/or
@@ -16,6 +16,6 @@
 #ifndef Setup_h
 #define Setup_h
 
-void SetupAccelerometer();
+void setupAccelerometer();
 
 #endif

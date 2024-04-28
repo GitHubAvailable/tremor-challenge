@@ -18,7 +18,7 @@
 
 // TODO: LED for Measuring, neo pixel to indcate tremor, intensity
 
-void SetupAcccelerometer()
+void setupAccelerometer()
 {
-
+    Serial.println("Called");
 }
