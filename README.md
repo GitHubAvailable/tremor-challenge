@@ -16,6 +16,8 @@ Classic.
     - [Testing](#testing)
 
 ## Description
+The workflow is shown in the following [state machine digram][workflow]:
+![Workflow State Machine Diagram](./img/workflow.svg)
 
 ## Requirements
 ### Hardware
@@ -48,3 +50,4 @@ Classic.
 
 [vscode]: https://code.visualstudio.com/download
 [platformIO]: https://platformio.org/platformio-ide
+[workflow]: ./img/workflow.svg

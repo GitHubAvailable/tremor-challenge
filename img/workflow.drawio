@@ -1,0 +1,75 @@
+<mxfile host="app.diagrams.net" modified="2024-04-29T01:11:06.869Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15" etag="LkqoVmaR6OKuVffSCCTT" version="24.3.0" type="device">
+  <diagram name="Page-1" id="58cdce13-f638-feb5-8d6f-7d28b1aa9fa0">
+    <mxGraphModel dx="954" dy="571" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2a3bc250acf0617d-8" value="Parkinsonian Tremor Detector" style="shape=umlFrame;whiteSpace=wrap;html=1;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12;align=center;width=210;height=35;" parent="1" vertex="1">
+          <mxGeometry x="100" y="140" width="900" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="382b91b5511bd0f7-1" value="" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;fontFamily=Verdana;fontSize=12;fontColor=#000000;align=center;direction=south;" parent="1" vertex="1">
+          <mxGeometry x="130" y="297" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-17" value="Idle" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" vertex="1" parent="1">
+          <mxGeometry x="330" y="270" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-18" value="&lt;div style=&quot;text-align: left;&quot;&gt;entry / clearUI()&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;do / displayReport()&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" vertex="1" parent="AdENiL-HEHsLU5x2v5hJ-17">
+          <mxGeometry y="30" width="160" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-23" value="Measuring" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" vertex="1" parent="1">
+          <mxGeometry x="690" y="265" width="250" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-24" value="&lt;div style=&quot;text-align: left;&quot;&gt;entry / clearUI(); showStart()&lt;div&gt;do / measure, FFT, showProgress()&lt;/div&gt;&lt;div&gt;exit / update report&lt;/div&gt;&lt;/div&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" vertex="1" parent="AdENiL-HEHsLU5x2v5hJ-23">
+          <mxGeometry y="30" width="250" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-30" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="382b91b5511bd0f7-1" target="AdENiL-HEHsLU5x2v5hJ-18">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="495" y="522" as="targetPoint" />
+            <mxPoint x="495" y="462" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-32" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="AdENiL-HEHsLU5x2v5hJ-18" target="AdENiL-HEHsLU5x2v5hJ-24">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="312.25" as="targetPoint" />
+            <mxPoint x="500" y="311.25" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-33" value="Press Start/End Button (Start)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="AdENiL-HEHsLU5x2v5hJ-32">
+          <mxGeometry x="-0.119" y="-3" relative="1" as="geometry">
+            <mxPoint x="5" y="-17" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-35" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="AdENiL-HEHsLU5x2v5hJ-24" target="AdENiL-HEHsLU5x2v5hJ-18">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="700" y="323" as="targetPoint" />
+            <mxPoint x="500" y="323" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="815" y="410" />
+              <mxPoint x="410" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-36" value="Press Start/End Button (Cancel)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="AdENiL-HEHsLU5x2v5hJ-35">
+          <mxGeometry x="-0.119" y="-3" relative="1" as="geometry">
+            <mxPoint x="-45" y="-7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-37" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="AdENiL-HEHsLU5x2v5hJ-23" target="AdENiL-HEHsLU5x2v5hJ-17">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="360" as="targetPoint" />
+            <mxPoint x="825" y="375" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="815" y="220" />
+              <mxPoint x="410" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AdENiL-HEHsLU5x2v5hJ-38" value="Measure complete" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="AdENiL-HEHsLU5x2v5hJ-37">
+          <mxGeometry x="-0.119" y="-3" relative="1" as="geometry">
+            <mxPoint x="-45" y="-7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
