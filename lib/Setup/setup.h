@@ -1,5 +1,5 @@
 /**
- * setup.h - Library of hardware setup functions for the 
+ * setup.h - Library of device setup functions for the 
  * Parkinsonian Tremor Detector.
  * 
  * This library is free software; you can redistribute it and/or
@@ -16,10 +16,31 @@
 #ifndef Setup_h
 #define Setup_h
 
+#include "report.h"
+
 #define START_END PD4 // pin of start/end button
 #define STATUS_LED PC7 // pin of status LED
 
 void setupButtons();
 void setupLED();
+void setupTimer();
+
+/*!
+    @brief disable Timer 1 overflow interrupt.
+*/
+void cliTimer();
+
+/*!
+    @brief enable Timer 1 overflow interrupt.
+*/
+void seiTimer();
+
+/*!
+    @brief reset the report for measurement
+    @note must be called before each test to ensure the 
+    correctness of `avgAmplitude`
+    @param the Report to be reset
+*/
+void resetReport(Report &report);
 
 #endif
