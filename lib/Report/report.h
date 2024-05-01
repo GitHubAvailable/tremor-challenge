@@ -24,11 +24,14 @@
 */
 struct Report
 {
-    /** if the user has Parkinsonian tremor */
-    bool hasTremor = false;
+    /** total number of measures taken */
+    uint8_t total = 0;
 
-    /** the relative intensity of the Parkinsonian tremor */
-    uint8_t intensity = 0;
-} report;
+    /** total number of measures taken */
+    uint8_t detected = 0;
+
+    /** the average displacement in cm */
+    float avgAmplitude = 0;
+};
 
 #endif
