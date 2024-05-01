@@ -18,13 +18,9 @@
 
 #include <Arduino.h>
 
-#define BUFFER_LENGTH 1024 // must be a power of 2
+#define BUFFER_SIZE 128 // must be a power of 2
 
 #define LENGTH(x, y, z) sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2))
-
-#define X_AXIS 0
-#define Y_AXIS 1
-#define Z_AXIS 2
 
 /** 
  * Buffer is used to store magnitude of 
@@ -35,28 +31,47 @@ struct Buffer
     private:
         // TODO: must be public or set friend for parser.
 
-        /** buffer for acceleration measurements on x, y, z axes */
-        float buffer[3][BUFFER_LENGTH];
+        /** buffer for acceleration magnitude */
+        float buffer[BUFFER_SIZE];
 
         /** index of next element to be inserted, same for all axes */
         int next;
         
-        // bool isFull = false;
+        /** if the buffer is full */
+        bool isFull = false;
     
     public:
-        float get(uint8_t axis, uint16_t index) const { return this->buffer[axis][index]; }
-        void set(uint8_t axis, uint16_t index, float val) { this->buffer[axis][index] = val; }
-        
+        float get(uint16_t index) const { return this->buffer[index]; }
+        void set(uint16_t index, float val) { this->buffer[index] = val; }
+
+        bool isBufferFull() const { return isFull; }
+
         /*!
-            @brief add a pair of acceleration components
+            @brief add a magnitude of acceleration value
+            @param val a flat value corresponding to the magnitude of the
+            acceleration.
+        */
+        void add(float val);
+
+        /*!
+            @brief add a magnitude of acceleration by its components
             @param x a float value corresponding to the acceleration on the 
-            x-axis.
+            x-axis
             @param y a float value corresponding to the acceleration on the 
-            x-axis.
+            y-axis
             @param z a float value corresponding to the acceleration on the 
-            x-axis.
+            z-axis
         */
         void add(float x, float y, float z);
-} buffer;
+
+        /*!
+            @brief reset the buffer for storing new measurements
+            @details reset `next` and `isFull`
+        */
+        void reset();
+        
+        friend struct Analyzer;
+
+};
 
 #endif

@@ -15,12 +15,25 @@
 
 #include "buffer.h"
 
+void Buffer::add(float val)
+{
+    buffer[next] = val;
+
+    if (++next < BUFFER_SIZE) { return; }
+
+    // Record buffer full and reset `next` index.
+    isFull = true;
+    next %= BUFFER_SIZE;
+}
+
 void Buffer::add(float x, float y, float z)
 {
-    // Add the acceleration components to corresponding array.
-    this->buffer[X_AXIS][next] = x;
-    this->buffer[Y_AXIS][next] = y;
-    this->buffer[Z_AXIS][next] = z;
-    
-    (++next) %= BUFFER_LENGTH;
+    // Add the magnitude of acceleration.
+    add(LENGTH(x, y, z));
+}
+
+void Buffer::reset()
+{
+    next = 0;
+    isFull = false;
 }
