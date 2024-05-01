@@ -19,6 +19,7 @@
 #include <Arduino.h>
 #include "report.h"
 
+#define THRESHOLD 0.9
 
 /*!
     @brief turn off the status LED and all neopixels

@@ -79,17 +79,17 @@ void showIntensity(uint8_t percent)
 
 void displayReport(Report &report)
 {
-    if (!report.hasTremor)
+    if ((THRESHOLD * report.total > report.detected) || !(report.total))
     {
-        // No tremor detected.
+        // No tremor detected or no measurement.
         PORTC &= ~(HIGH << STATUS_LED);
         showProgress(100);
         return;
     }
 
-    // Tremor detected.
+    // Tremor detected (detected in most trials).
     PORTC |= (HIGH << STATUS_LED);
 
-    // Light neopixels according to intensity.
-    showIntensity(report.intensity);
+    // Light neopixels according to relative intensity (ratio to 5cm).
+    showIntensity(report.avgAmplitude * 100 / 5);
 }
