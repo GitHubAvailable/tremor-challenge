@@ -33,12 +33,11 @@ void clearUI()
 void showStart()
 {
     PORTC |= (HIGH << STATUS_LED);
+    CircuitPlayground.clearPixels(); // Initialize neopixels.
 }
 
 void showProgress(uint8_t percent)
 {
-    CircuitPlayground.clearPixels();
-
     // Turn on neopixel 0-9 by percent 0-99.
     uint8_t num, last;
     
@@ -90,6 +89,6 @@ void displayReport(Report &report)
     // Tremor detected (detected in most trials).
     PORTC |= (HIGH << STATUS_LED);
 
-    // Light neopixels according to relative intensity (ratio to 5cm).
+    // Light neopixels according to relative avgAmplitude.
     showIntensity(report.avgAmplitude * 100 / 5);
 }
