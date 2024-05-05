@@ -11,8 +11,9 @@ Classic.
   - [Requirements](#requirements)
     - [Hardware](#hardware)
     - [Software](#software)
-  - [Installation](#installation)
-    - [Setup](#setup)
+  - [Setup](#setup)
+    - [Hardware](#hardware-1)
+    - [Software](#software-1)
     - [Testing](#testing)
 
 ## Description
@@ -22,15 +23,21 @@ The workflow is shown in the following [state machine digram][workflow]:
 ## Requirements
 ### Hardware
 + Adafruit Playground Classic;
-+ Power Supply/USB Power Bank (or LIPO Battery).
++ Power Supply/USB Power Bank (or LIPO Battery);
++ Tactile Switches (as external interrupt trigger);
++ 10 kohm resistor;
++ 2 pF capacitor (to prevent mechanical bouncing).
 
 ### Software
 + [Visual Studio Code][vscode] with [PlatformIO IDE][platformIO] 
   Extension.
 
-## Installation
-### Setup
+## Setup
+### Hardware
+Circuit connection is shown in the following image:
+![Hardware Connection](./img/connection.jpg)
 
+### Software
 1. Download zip folder by clicking the `Code` button on the upper
    right or clone the repository using 
    ```bash
@@ -47,6 +54,7 @@ The workflow is shown in the following [state machine digram][workflow]:
    in `src/main.cpp` will may lead to an error about `SPI.h` not found.
 
 ### Testing
+Adafruit Playground Classic does not support PlatformUI Unit Testing.
 
 [vscode]: https://code.visualstudio.com/download
 [platformIO]: https://platformio.org/platformio-ide
