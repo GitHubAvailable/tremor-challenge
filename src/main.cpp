@@ -7,8 +7,6 @@
 #include "setup.h"
 #include "state.h"
 
-#define LAPSE 20
-
 // Allocate software resources.
 struct Buffer buffer;
 struct Report report;
@@ -20,8 +18,9 @@ volatile enum State state;
 void setup() 
 {
     // put your setup code here, to run once:
-    cli(); // Setup process ignore any interrupt.
+    cli(); // Not allowed Setup process ignore any interrupt.
     // Setup Hardwares.
+    // Serial.begin(9600);
     setupButtons();
     setupLED();
     setupTimer();
@@ -33,7 +32,7 @@ void setup()
     CircuitPlayground.begin();
 
     // Enter Idle state.
-    state = State::Idle;
+    state = State::Idle; 
     sei();
 }
 
@@ -43,19 +42,21 @@ ISR(TIMER1_OVF_vect)
     analyzer.measure();
 }
 
-ISR(PCINT0_vect)
+ISR(INT0_vect)
 {
-    if (!(PORTD & (HIGH << START_END))) { return; }
-
+    cli(); // prevent multiple calls due to mechanical bouncing
     // Start/End button pressed, change state.
-    state = (State) ~(state);
+    state = (state == Idle) ? Measuring : Idle;
 
     if (state == Measuring)
     {
         // Start a new test.
+        startTimer();
         resetReport(report);
         showStart();
     }
+
+    sei();
 }
 
 void loop() 
@@ -68,6 +69,10 @@ void loop()
             {
                 // Test is over.
                 state = Idle;
+                // Serial.println("analyzed");
+                // Serial.println(report.detected);
+                // Serial.println(report.total);
+                // Serial.println(report.avgAmplitude);
                 return;
             }
 
@@ -83,9 +88,9 @@ void loop()
                 }
 
                 // Analyzing process should not be interrupted.
-                cliTimer();
+                stopTimer();
                 analyzer.analyze();
-                seiTimer();
+                startTimer();
 
                 // Reset buffer for new measurements.
                 buffer.reset();
@@ -93,6 +98,7 @@ void loop()
             break;
         
         default:
+            stopTimer();
             buffer.reset();
 
             clearUI();
