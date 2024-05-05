@@ -18,7 +18,7 @@
 
 #include "report.h"
 
-#define START_END PD4 // pin of start/end button
+#define START_END PD0 // pin of start/end button
 #define STATUS_LED PC7 // pin of status LED
 
 void setupButtons();
@@ -26,14 +26,14 @@ void setupLED();
 void setupTimer();
 
 /*!
-    @brief disable Timer 1 overflow interrupt.
+    @brief start Timer 1 counting.
 */
-void cliTimer();
+void startTimer();
 
 /*!
-    @brief enable Timer 1 overflow interrupt.
+    @brief stop Timer 1 counting.
 */
-void seiTimer();
+void stopTimer();
 
 /*!
     @brief reset the report for measurement

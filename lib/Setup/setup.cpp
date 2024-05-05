@@ -19,6 +19,17 @@
 void setupButtons()
 {
     DDRD &= ~(OUTPUT << START_END); // set start/end button to INPUT.
+
+    /**
+     * Interrupt Settings:
+     * 
+     * PD0 corresponds to INT0
+     * Enable INT0
+     * ISC (11): Raise flag at risisng edge
+     */
+    EICRA |= (HIGH << ISC01) 
+           | (HIGH << ISC00);
+    EIMSK |= (HIGH << INT0);
 }
 
 void setupLED()
@@ -30,24 +41,32 @@ void setupLED()
 
 void setupTimer()
 {
-    /* Setup Timer1 for triggering measurement. */
+    /* Configure Timer1 for triggering measurement. */
     /**
      * WGM (1111): Fast PWM, OCR1A as TOP
-     * CS (001): Prescaler 1
+     * CS (001): Prescaler 1 (disabled for now, or timer starts)
      * Clock Top: 62500 (8MHz / 128Hz = 62500)
      * Enable Timer 1 Overflow Interrupt
      */
     TCCR1A |= (HIGH << WGM11)
             | (HIGH << WGM10);
     TCCR1B |= (HIGH << WGM13)
-            | (HIGH << WGM12)
-            | (HIGH << CS10);
+            | (HIGH << WGM12);
+    TCCR1B &= ~(HIGH << CS12) 
+            & ~(HIGH << CS11);
     OCR1A = 62500;
     TIMSK1 |= (HIGH << TOIE1);
 }
 
-void cliTimer() { TIMSK1 &= ~(HIGH << TOIE1); }
-void seiTimer() { TIMSK1 |= (HIGH << TOIE1); }
+void stopTimer() 
+{
+    TCCR1B &= ~(HIGH << CS10);
+}
+
+void startTimer()
+{
+    TCCR1B |= (HIGH << CS10);
+}
 
 void resetReport(Report &report)
 {
