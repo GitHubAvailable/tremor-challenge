@@ -20,7 +20,8 @@
 #define RECT_LOW 2 * LOW_FREQ // rectified low frequency
 #define RECT_HIGH 2 * HIGH_FREQ // rectified high frequency
 
-const float samplingFrequency = 2 * BUFFER_SIZE;
+#define SAMP_FREQ 2 * BUFFER_SIZE
+#define BIN_WIDTH SAMP_FREQ / BUFFER_SIZE
 
 void clearArr(float *arr, uint16_t length);
 
@@ -32,7 +33,94 @@ buffer(buffer), report(report)
 
     // Initialize FFT object for signal processing.
     fft = ArduinoFFT<float>(buffer.buffer, imags, 
-        BUFFER_SIZE, samplingFrequency);
+        BUFFER_SIZE, SAMP_FREQ);
+}
+
+void Analyzer::findMaxPeakInRange(float &freq, float &magnitude, 
+float minFreq, float maxFreq)
+{
+    // Check input validity.
+    if ((minFreq > maxFreq) 
+        || (maxFreq < 0) 
+        || (minFreq > SAMP_FREQ))
+    {
+        freq = -1;
+        return;
+    }
+
+    // Bound frequency range.
+    minFreq = max(minFreq, 0);
+    maxFreq = min(maxFreq, SAMP_FREQ);
+
+    // Determine start and end indices.
+    uint16_t startIndex, endIndex;
+    startIndex = (uint16_t) (minFreq / BIN_WIDTH);
+    endIndex = (uint16_t) (maxFreq / BIN_WIDTH);
+
+    // Ensure `startIndex` and `endIndex` match freq in desired range.
+    startIndex = (startIndex * BIN_WIDTH < minFreq) ? 
+        (startIndex + 1) : startIndex;
+    endIndex = min(endIndex, BUFFER_LENGTH - 1);
+    
+    if (startIndex > endIndex)
+    {
+        freq = -1;
+        return;
+    }
+
+    float leftMag, mag, rightMag;
+
+    // Get adjacent values for `startIndex`.
+    leftMag = (startIndex > 0) ? buffer.get(startIndex - 1) : 0;
+    mag = buffer.get(startIndex);
+    rightMag = (startIndex < BUFFER_LENGTH - 1) ? buffer.get(startIndex + 1) : 0;
+
+    // Test the first freq in range.
+    if (!(leftMag < mag) || !(mag > rightMag)) { freq = -1; }
+    else
+    {
+        // Has a peak.
+        freq = startIndex * BIN_WIDTH;
+        magnitude = mag;
+    }
+
+    if (startIndex == endIndex) { return; }
+
+    // Create `maxMag` to compare peak magnitude as `magnitude` is any float.
+    float maxMag = 0;
+
+    for (uint16_t index = startIndex + 1; index < endIndex; index++)
+    {
+        // Get values.
+        leftMag = buffer.get(index - 1);
+        mag = buffer.get(index);
+        rightMag = buffer.get(index + 1);
+
+        if (!(leftMag < mag) || !(mag > rightMag)) { continue; }
+        if (mag <= maxMag) { continue; }
+
+        freq = startIndex * BIN_WIDTH;
+        maxMag = mag;
+    }
+    
+    // Read last value.
+    mag = buffer.get(endIndex);
+    rightMag = (endIndex < BUFFER_LENGTH - 1) ? 
+        buffer.get(endIndex + 1) : 0;
+
+    if ((buffer.get(endIndex - 1) < mag) && (mag > rightMag))
+    {
+        if (mag > maxMag)
+        {
+            // Last is the greatest peak.
+            freq = endIndex * BIN_WIDTH;
+            magnitude = mag;
+            return;
+        }
+    }
+
+    magnitude = maxMag;
+    return;
 }
 
 void Analyzer::measure()
@@ -52,17 +140,19 @@ void Analyzer::analyze()
     /**
      * Get peak and magnitude. May need a low pass filter to 
      * improve accuracy.
-     * 
-     * TODO: use custom function find peak.
      */
-    fft.majorPeakParabola(&peakFreq, &accMagnitude);
+    findMaxPeakInRange(peakFreq, accMagnitude, RECT_LOW, RECT_HIGH);
+    // Serial.print("Freq:");
+    // Serial.println(peakFreq);
+    // Serial.print("Magnitude:");
+    // Serial.println(accMagnitude);
 
     if ((peakFreq >= RECT_LOW) && (peakFreq <= RECT_HIGH))
     {
-        // Calculate the amplitude of displacement in cm.
-        float moveAmplitude = accMagnitude / pow(peakFreq, 2) * 100;
+        // Calculate the relative amplitude of displacement.
+        float moveAmplitude = accMagnitude / pow(peakFreq, 2);
 
-        if (moveAmplitude > 5) // some threshold, may need adjustion
+        if (moveAmplitude > 0.05) // some threshold, may need adjustion
         {
             // Dectected tremor.
             report.detected++;
@@ -87,5 +177,5 @@ void Analyzer::analyze()
 void clearArr(float *arr, uint16_t length)
 {
     uint16_t index = 0;
-    while (index < length) { arr[index] = 0; }
+    while (index < length) { arr[index++] = 0; }
 }

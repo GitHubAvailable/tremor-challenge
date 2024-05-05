@@ -38,13 +38,29 @@ struct Analyzer
 
         /** an fft object used to analyze signals */
         ArduinoFFT<float> fft;
+
+        /*!
+            @brief find the max peak between `minFreq` and `maxFreq`, inclusive, 
+            set `freq` to `-1` if doesn't find or parameters invalid.
+            @param freq a reference to the variable to store the frequency 
+            of the peak
+            @param magnitude a reference to the variable to store the 
+            magnitude of the peak
+            @param minFreq a nonnegative float value corresponding to 
+            the minimum of the frequency range
+            @param maxFreq a nonnegative float value corresponding to 
+            the maximum of the frequency range
+            @note should only be called after FFT on `buffer`
+        */
+        void findMaxPeakInRange(float &freq, float &magnitude, 
+            float minFreq, float maxFreq);
     
     public:
         /*!
             @brief construct an analyzer using a specific buffer 
             and a Report struct
             @param buffer a reference to the buffer where the 
-            data are stored
+            data are stored, its length must be power of 2 to run FFT
             @param report a reference to the report where results 
             are written to
         */
