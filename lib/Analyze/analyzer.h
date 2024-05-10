@@ -22,7 +22,7 @@
 #define LOW_FREQ 3
 #define HIGH_FREQ 6
 
-#define TOTAL_MEASURES 50
+#define TOTAL_MEASURES 300
 
 struct Analyzer
 {
