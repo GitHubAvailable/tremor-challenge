@@ -1,3 +1,9 @@
+/**
+ * Team Members (Net ID):
+ *     - Mark Liu (hl4963)
+ *     - Christopher Haddad (cnh2026)
+ *     - Nico Gomez Avila (ng2384)
+ */
 #include <Arduino.h>
 // Removing the line below may cause `SPI.h` missing error
 #include <Adafruit_CircuitPlayground.h> 
@@ -18,9 +24,9 @@ volatile enum State state;
 void setup() 
 {
     // put your setup code here, to run once:
-    cli(); // Not allowed Setup process ignore any interrupt.
+    cli(); // Setup process ignore any interrupt.
     // Setup Hardwares.
-    // Serial.begin(9600);
+    Serial.begin(9600);
     setupButtons();
     setupLED();
     setupTimer();
@@ -50,9 +56,11 @@ ISR(INT0_vect)
 
     if (state == Measuring)
     {
+        // Clear previous data.
+        analyzer.clearResult();
+
         // Start a new test.
         startTimer();
-        resetReport(report);
         showStart();
     }
 
@@ -65,20 +73,17 @@ void loop()
     switch (state)
     {
         case Measuring:
-            if (report.total == TOTAL_MEASURES) 
+            if (analyzer.getCurrentTotal() == TOTAL_MEASURES) 
             {
+                // Save data to `report`.
+                analyzer.saveResult();
                 // Test is over.
                 state = Idle;
-                // Serial.println("analyzed");
-                // Serial.println(report.detected);
-                // Serial.println(report.total);
-                // Serial.println(report.avgAmplitude);
                 return;
             }
 
             // UpdateUI.
-            showProgress((uint8_t) (report.total * 100 / TOTAL_MEASURES));
-
+            showProgress((uint8_t) (analyzer.getCurrentTotal() * 100 / TOTAL_MEASURES));
             if (buffer.isBufferFull())
             {
                 if (state == Idle)

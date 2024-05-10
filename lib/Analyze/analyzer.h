@@ -22,7 +22,7 @@
 #define LOW_FREQ 3
 #define HIGH_FREQ 6
 
-#define TOTAL_MEASURES 500
+#define TOTAL_MEASURES 50
 
 struct Analyzer
 {
@@ -33,7 +33,10 @@ struct Analyzer
         /** imaginary parts for FFT, will be set to 0 */
         float imags[BUFFER_SIZE];
 
-        /** reference to the report where results are written to */
+        /** the report that stores the temporary report */
+        struct Report record;
+
+        /** reference to the report where final results are written to */
         struct Report &report;
 
         /** an fft object used to analyze signals */
@@ -56,6 +59,10 @@ struct Analyzer
             float minFreq, float maxFreq);
     
     public:
+        uint8_t getCurrentTotal() { return record.total; }
+        uint8_t getCurrentDetected() { return record.detected; }
+        float getCurrentAvgAmplitude() { return record.avgAmplitude; }
+
         /*!
             @brief construct an analyzer using a specific buffer 
             and a Report struct
@@ -79,6 +86,16 @@ struct Analyzer
             magnitude over the square of the frequency
         */
         void analyze();
+
+        /*!
+            @brief write the result from `record` to `report`
+        */
+        void saveResult();
+
+        /*!
+            @brief reset the temporary report `record`
+        */
+        void clearResult();
 };
 
 #endif

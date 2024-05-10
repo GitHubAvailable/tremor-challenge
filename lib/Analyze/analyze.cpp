@@ -142,10 +142,6 @@ void Analyzer::analyze()
      * improve accuracy.
      */
     findMaxPeakInRange(peakFreq, accMagnitude, RECT_LOW, RECT_HIGH);
-    // Serial.print("Freq:");
-    // Serial.println(peakFreq);
-    // Serial.print("Magnitude:");
-    // Serial.println(accMagnitude);
 
     if ((peakFreq >= RECT_LOW) && (peakFreq <= RECT_HIGH))
     {
@@ -155,18 +151,32 @@ void Analyzer::analyze()
         if (moveAmplitude > 0.05) // some threshold, may need adjustion
         {
             // Dectected tremor.
-            report.detected++;
+            record.detected++;
 
             // Update average.
-            report.avgAmplitude = (report.avgAmplitude * (report.detected - 1) 
-                + moveAmplitude) / (report.detected);
+            record.avgAmplitude = (record.avgAmplitude * (record.detected - 1) 
+                + moveAmplitude) / (record.detected);
         }
     }
 
-    report.total++;
+    record.total++;
 
     // Reset imags part.
     clearArr(imags, BUFFER_SIZE);
+}
+
+void Analyzer::saveResult()
+{
+    report.total = record.total;
+    report.detected = record.detected;
+    report.avgAmplitude = record.avgAmplitude;
+}
+
+void Analyzer::clearResult()
+{
+    record.total = 0;
+    record.detected = 0;
+    record.avgAmplitude = 0;
 }
 
 /*!
