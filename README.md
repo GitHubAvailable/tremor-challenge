@@ -15,6 +15,7 @@ Classic.
     - [Hardware](#hardware-1)
     - [Software](#software-1)
     - [Testing](#testing)
+  - [Acknowledgements](#acknowledgements)
 
 ## Description
 The workflow is shown in the following [state machine digram][workflow]:
@@ -56,6 +57,13 @@ Circuit connection is shown in the following image:
 ### Testing
 Adafruit Playground Classic does not support PlatformUI Unit Testing.
 
+## Acknowledgements
+Thank you to [asapbruhh10][asapbruhh10] and [chrisnhaddad][chrisnhaddad] for 
+your inspiring designs and contribution in recording and editing the demo video!
+
 [vscode]: https://code.visualstudio.com/download
 [platformIO]: https://platformio.org/platformio-ide
 [workflow]: ./img/workflow.svg
+
+[asapbruhh10]: https://github.com/asapbruhh10
+[chrisnhaddad]: https://github.com/chrisnhaddad
