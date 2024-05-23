@@ -1,8 +1,8 @@
 /**
- * Team Members (Net ID):
- *     - Mark Liu (hl4963)
- *     - Christopher Haddad (cnh2026)
- *     - Nico Gomez Avila (ng2384)
+ * Team Members (GitHub Username):
+ *     - GitHubAvailable
+ *     - chrisnhaddad
+ *     - asapbruhh10
  */
 #include <Arduino.h>
 // Removing the line below may cause `SPI.h` missing error
